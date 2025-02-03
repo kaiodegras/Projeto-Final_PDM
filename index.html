@@ -20,6 +20,12 @@
       </select>
       <input type="date" id="task-date" required>
       <input type="time" id="task-time" required>
+      
+      <!-- Adicionando a câmera -->
+      <video id="camera-preview" autoplay></video>
+      <button type="button" id="capture-button">Capturar Imagem</button>
+      <canvas id="canvas" style="display:none;"></canvas>
+      
       <button type="submit">Adicionar Tarefa</button>
     </form>
 
@@ -45,11 +51,6 @@
   <script src="/src/main.js"></script>
 </body>
 </html>
-
-
-
-
-
 
 
 

@@ -182,3 +182,31 @@ li:hover {
     padding: 0.4rem 0.8rem;
   }
 }
+
+.task-image {
+  max-width: 100px;
+  max-height: 100px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+#camera-preview {
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+}
+
+#capture-button {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#capture-button:hover {
+  background-color: #0056b3;
+}

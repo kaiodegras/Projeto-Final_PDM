@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="task-title">${task.title}</span>
           <span class="task-date">${task.date} às ${task.time}</span>
           <span class="task-category">${task.category}</span>
+          ${task.image ? `<img src="${task.image}" alt="Task Image" class="task-image">` : ''}
         </div>
         <div class="task-actions">
           <button onclick="window.deleteTask(${task.id})">Excluir</button>
@@ -87,6 +88,29 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTasks(tasks);
   };
 
+  // Acessar a câmera e capturar imagem
+  const video = document.getElementById('camera-preview');
+  const canvas = document.getElementById('canvas');
+  const captureButton = document.getElementById('capture-button');
+  let capturedImage = null;
+
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then((stream) => {
+      video.srcObject = stream;
+    })
+    .catch((error) => {
+      console.error('Erro ao acessar a câmera:', error);
+    });
+
+  captureButton.addEventListener('click', () => {
+    const context = canvas.getContext('2d');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    capturedImage = canvas.toDataURL('image/png');
+  });
+
+  // Modificar a função de adicionar tarefa para incluir a imagem
   const taskForm = document.getElementById('task-form');
   taskForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -95,10 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const date = document.getElementById('task-date').value;
     const time = document.getElementById('task-time').value;
 
-    const task = { title, category, date, time };
+    const task = { title, category, date, time, image: capturedImage };
     await addTask(task);
     loadTasks();
     taskForm.reset();
+    capturedImage = null; // Resetar a imagem capturada
 
     const notificationDateTime = new Date(`${date}T${time}`);
     const now = new Date();
